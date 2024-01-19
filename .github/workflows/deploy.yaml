@@ -18,15 +18,14 @@ jobs:
         run: |
           if [ $GITHUB_REF == 'refs/heads/main' ]; then
             echo "REACT_APP_NAME=main" >> .env
-            S3_BUCKET_NAME="tests-static-ronal-web"
+            echo "S3_BUCKET_NAME=tests-static-ronal-web"  >> .env
           elif [ $GITHUB_REF == 'refs/heads/dev' ]; then
             echo "REACT_APP_NAME=developer" >> .env
-            S3_BUCKET_NAME="tests-static-ronal-web"
+            echo "S3_BUCKET_NAME=tests-static-ronal-web"  >> .env
           else
             echo "REACT_APP_NAME=prod" >> .env
-            S3_BUCKET_NAME="tests-static-ronal-web"
+            echo "S3_BUCKET_NAME=tests-static-ronal-web"  >> .env
           fi
-          echo "S3_BUCKET_NAME=$S3_BUCKET_NAME" >> .env
       - name: Install dependency
         run: npm i
       - name: Build
