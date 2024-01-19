@@ -20,7 +20,7 @@ jobs:
             echo "REACT_APP_NAME=main" >> .env
             S3_BUCKET_NAME="tests-static-ronal-web"
           elif [ $GITHUB_REF == 'refs/heads/dev' ]; then
-            echo "REACT_APP_NAME=dev" >> .env
+            echo "REACT_APP_NAME=developer" >> .env
             S3_BUCKET_NAME="tests-static-ronal-web"
           else
             echo "REACT_APP_NAME=prod" >> .env
