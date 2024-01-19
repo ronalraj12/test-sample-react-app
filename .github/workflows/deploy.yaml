@@ -36,5 +36,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+      - name: Validate and Print S3 Bucket Name
+        run: |
+          if [ -z "${{ env.S3_BUCKET_NAME }}" ]; then
+            echo "Error: S3_BUCKET_NAME is empty."
+            exit 1
+          fi
+          echo "S3_BUCKET_NAME: ${{ env.S3_BUCKET_NAME }}"
       - name: Copy to S3
         run: aws s3 sync build/ "s3://${{ env.S3_BUCKET_NAME }}"
