@@ -20,7 +20,7 @@ jobs:
             echo "REACT_APP_NAME=main" >> $GITHUB_ENV
             echo "S3_BUCKET_NAME=tests-static-ronal-web" >> $GITHUB_ENV
           elif [ $GITHUB_REF == 'refs/heads/dev' ]; then
-            echo "REACT_APP_NAME=developer" >> $GITHUB_ENV
+            echo "REACT_APP_NAME=develop" >> $GITHUB_ENV
             echo "S3_BUCKET_NAME=tests-static-ronal-web" >> $GITHUB_ENV
           else
             echo "REACT_APP_NAME=prod" >> $GITHUB_ENV
@@ -30,18 +30,18 @@ jobs:
         run: npm i
       - name: Build
         run: npm run build 
+     #- name: Configure AWS Credentials
+      #  uses: aws-actions/configure-aws-credentials@v1
+      #  with:
+       #   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+       #   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        #  aws-region: us-east-1
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::904047573216:role/s3role
+          role-session-name: GitHub_SH_Deploy_IAM_to_AWS
           aws-region: us-east-1
-      - name: Validate and Print S3 Bucket Name
-        run: |
-          if [ -z "${{ env.S3_BUCKET_NAME }}" ]; then
-            echo "Error: S3_BUCKET_NAME is empty."
-            exit 1
-          fi
-          echo "S3_BUCKET_NAME: ${{ env.S3_BUCKET_NAME }}"
+          
       - name: Copy to S3
         run: aws s3 sync build/ "s3://${{ env.S3_BUCKET_NAME }}"
