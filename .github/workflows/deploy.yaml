@@ -18,13 +18,13 @@ jobs:
         run: |
           if [ $GITHUB_REF == 'refs/heads/main' ]; then
             echo "REACT_APP_NAME=main" >> .env
-            echo "S3_BUCKET_NAME=tests-static-ronal-web"  >> .env
+            echo "S3_BUCKET_NAME=tests-static-ronal-web" >> .env
           elif [ $GITHUB_REF == 'refs/heads/dev' ]; then
             echo "REACT_APP_NAME=developer" >> .env
-            echo "S3_BUCKET_NAME=tests-static-ronal-web"  >> .env
+            echo "S3_BUCKET_NAME=tests-static-ronal-web" >> .env
           else
             echo "REACT_APP_NAME=prod" >> .env
-            echo "S3_BUCKET_NAME=tests-static-ronal-web"  >> .env
+            echo "S3_BUCKET_NAME=tests-static-ronal-web" >> .env
           fi
       - name: Install dependency
         run: npm i
@@ -37,4 +37,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Copy to S3
-        run: aws s3 sync build/ s3://${{ env.S3_BUCKET_NAME }}
+        run: aws s3 sync build/ "s3://${{ env.S3_BUCKET_NAME }}"
