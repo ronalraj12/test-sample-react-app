@@ -17,14 +17,14 @@ jobs:
       - name: Set Environment Variable
         run: |
           if [ $GITHUB_REF == 'refs/heads/main' ]; then
-            echo "REACT_APP_NAME=main" >> .env
-            echo "S3_BUCKET_NAME=tests-static-ronal-web" >> .env
+            echo "REACT_APP_NAME=main" >> $GITHUB_ENV
+            echo "S3_BUCKET_NAME=tests-static-ronal-web" >> $GITHUB_ENV
           elif [ $GITHUB_REF == 'refs/heads/dev' ]; then
-            echo "REACT_APP_NAME=developer" >> .env
-            echo "S3_BUCKET_NAME=tests-static-ronal-web" >> .env
+            echo "REACT_APP_NAME=developer" >> $GITHUB_ENV
+            echo "S3_BUCKET_NAME=tests-static-ronal-web" >> $GITHUB_ENV
           else
-            echo "REACT_APP_NAME=prod" >> .env
-            echo "S3_BUCKET_NAME=tests-static-ronal-web" >> .env
+            echo "REACT_APP_NAME=prod" >> $GITHUB_ENV
+            echo "S3_BUCKET_NAME=tests-static-ronal-web" >> $GITHUB_ENV
           fi
       - name: Install dependency
         run: npm i
